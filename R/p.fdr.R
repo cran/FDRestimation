@@ -2,10 +2,10 @@
 ##	Purpose: 	Compute FDRs and Adjusted p-values
 ##
 ##	Function:	p.fdr
-##	Version:	1.0
+##	Version:	2.0
 ##
 ##	Author:		Megan H. Murray and Jeffrey D. Blume
-##	Date:		  November 5th, 2020
+##	Date:		  March 2022
 ################################################################
 #
 #' FDR Computation
@@ -87,8 +87,6 @@
 #'
 #' \insertRef{shaffer:1995}{FDRestimation}
 #'
-#' \insertRef{wach:2004}{FDRestimation}
-#'
 #' \insertRef{storey:2003}{FDRestimation}
 #'
 #' \insertRef{by:2001}{FDRestimation}
@@ -112,7 +110,7 @@
 #' \insertRef{murray2020false}{FDRestimation}
 
 
-p.fdr = function(pvalues,
+p.fdr = function(pvalues = NA,
                  zvalues = "two.sided",
                  threshold=0.05,
                  adjust.method="BH",
@@ -131,22 +129,32 @@ p.fdr = function(pvalues,
   cl <- match.call()
 
   # Error Checking
+  if(length(pvalues)==1){
+    if(is.na(pvalues)){
+      stop("The user must supply an input for 'pvalues' in order for all computations to be done correctly.")
+    }
+  }
   if(TRUE %in% (pvalues>1|pvalues<0)){
-    stop("'pvalues' has value outside acceptable [0,1] range")
+    stop("The input 'pvalues' has value outside acceptable [0,1] range")
   }
   if(threshold>=1|threshold<=0){
-    stop("'threshold' has value outside acceptable (0,1) range")
+    stop("The input 'threshold' has value outside acceptable (0,1) range")
   }
   if(set.pi0>1|set.pi0<0){
-    stop("'set.pi0' has value outside acceptable [0,1] range")
+    stop("The input 'set.pi0' has value outside acceptable [0,1] range")
   }
   if(default.odds<0){
-    stop("'default.odds' has a negative value which is outside its acceptable range")
+    stop("The input 'default.odds' has a negative value which is outside its acceptable range")
   }
   if(!(BY.corr %in% c("positive", "negative"))){
-    stop("'BY.corr' input not acceptable. Must be either 'positive' or 'negative'")
+    stop("The 'BY.corr' input not acceptable. Must be either 'positive' or 'negative'")
   }
-
+  if(any(duplicated(pvalues))){
+    warning(paste0("There are ties in the input 'pvalues' and their ranks are determined using the '", ties.method, "' ties method."))
+  }
+  if(length(pvalues)==1){
+    warning(paste0("Only 1 raw p-value was given so the lower bound on the posterior probability will be returned."))
+  }
   n=length(pvalues)
 
   #Remove NA inputted pvalues, zvalues

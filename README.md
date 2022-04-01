@@ -19,10 +19,19 @@ Director of Graduate Education, Data Science Institute
 
 News
 ----
-Version 1.0.0
+Version 1.0.1
 
 Installation
 ------------
+
+This package is availble on CRAN: https://CRAN.R-project.org/package=FDRestimation
+
+``` r
+install.packages("FDRestimation")
+```
+
+
+Or directly from GitHub:
 
 ``` r
 # install.packages("devtools")
@@ -75,7 +84,7 @@ help(p.fdr)
 References
 ----------
 
-A corresponding paper explaining and illustarting this package is in the process of being submitted to The R Journal.  
-https://arxiv.org/abs/2010.04680
+A corresponding paper explaining and illustrating this package is in F1000 research.  
+https://f1000research.com/articles/10-441
 
 

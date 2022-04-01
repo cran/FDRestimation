@@ -5,7 +5,7 @@
 \title{FDR Computation}
 \usage{
 p.fdr(
-  pvalues,
+  pvalues = NA,
   zvalues = "two.sided",
   threshold = 0.05,
   adjust.method = "BH",
@@ -103,8 +103,6 @@ fdr.output$`Results Matrix`
 \insertRef{bh:1995}{FDRestimation}
 
 \insertRef{shaffer:1995}{FDRestimation}
-
-\insertRef{wach:2004}{FDRestimation}
 
 \insertRef{storey:2003}{FDRestimation}
 
